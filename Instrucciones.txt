@@ -1,0 +1,8 @@
+Todo en SRC y APP
+    +API(Users --> Login y SignUp)
+    +Tendra carpeta con nombre de pagina, dentro un tsx page.tsx
+    +Helpers
+    +Models
+    +Carpeta dbConfig(dbConfig.ts --> importacion de Mongoose)
+
+Afuera un archivo .env con URL de DB, Token_Secret, y Domain en mayus.
