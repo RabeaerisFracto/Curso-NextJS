@@ -23,7 +23,7 @@ export default function SignupPage(){
     const onSignup = async ()=>{
         try{
             setLoading(true);
-            const response = await axios.post('/api/users/signup',user);
+            const response = await axios.post('/api/users/signup',user);//conexion con API
             console.log("Signup exisoto", response.data)
             router.push("/login")
         }catch(error:any){console.log("error catch L29 signup/page.tsx")}

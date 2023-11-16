@@ -9,11 +9,14 @@ const userSchema = new mongoose.Schema({
     email:{
         type: String,
         required: [true,"porfavor, ingresa tu email"],
+        lowercase: true,
+        inmmutable: true,
         unique:true,
     },
     password:{
         type: String,
         required: [true,"porfavor, ingresa tu contraseña"],
+        minLength: 10,
     },
     isVerified: {
         type: Boolean,

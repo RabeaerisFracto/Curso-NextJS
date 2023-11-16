@@ -1,30 +1,42 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React from "react";
-import { Axios } from "axios";
+import React, { useEffect } from "react";
+import axios from "axios";
 import '@picocss/pico'
 import '../styles/logsign.css'
 
 
 export default function LoginPage(){
+    const router = useRouter();
     const [user, setUser] = React.useState({
         password:"",
         username:""
     })
-    
+    const [buttonDisabled,setButtonDisabled] = React.useState(false);
+    const [loading, setLoading] = React.useState(false)
     const onLogin = async ()=>{
-        
+        try {
+            setLoading(true)
+            const response = await axios.post("/api/users/login", user);
+            console.log("Logueo exitoso", response.data);
+            router.push("/profile")
+        } catch (error:any) {
+            console.log("logueo fallido", error.messege)
+        }finally{
+            setLoading(false);
+        }
     }
-
+    useEffect(()=>{
+        if(user.username.length > 0 && user.password.length > 0){
+            setButtonDisabled(false);
+        }else{setButtonDisabled(true)}
+    },[user])
+    
     return(
-    <div>
     <div className="cuadro-signup">
-        <div>
-            <h1>Login</h1>
-            <h2>Ingresa a tu cuenta</h2>
-        </div>
-        <form >
+        <h1>{loading? "Entrando":"Ingresa tu cuenta"}</h1>
+        <hr />
         <input
             id="username"
             type="text"
@@ -52,9 +64,8 @@ export default function LoginPage(){
             Recuerdame 🎶
             </label>
         </fieldset>
-        <button type="submit" className="contrast" onClick={onLogin}>Registrarse</button>
-        </form>
+        <button type="submit" className="contrast" onClick={onLogin}>{buttonDisabled?"..." :"Logear"}</button>
         <Link href="/signup"> No tienes cuenta? registrate! </Link>
-    </div></div>
+    </div>
 )
 }
